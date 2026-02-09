@@ -1,18 +1,28 @@
 #!/bin/bash
-# Attend que la base de données MySQL soit prête
+# Script d’attente pour la base de données
 
 set -e
 
-host="$1"
-shift
-cmd="$@"
+HOST=${DB_HOST:-"db"}
+PORT=${DB_PORT:-"3306"}
+USER=${DB_USER:-"root"}
+PASSWORD=${DB_PASSWORD:-"root"}
 
-echo "En attente de la base de données sur $host..."
+MAX_TRIES=30
+WAIT_SECONDS=2
 
-until mysqladmin ping -h "$host" -u root -prootpassword --silent; do
-  echo "MySQL n'est pas encore prêt - attente..."
-  sleep 2
+echo "Attente de la base de données $HOST:$PORT..."
+
+for i in $(seq 1 $MAX_TRIES); do
+    if mysql -h"$HOST" -P"$PORT" -u"$USER" -p"$PASSWORD" --skip_ssl \
+    -e "SELECT 1" > /dev/null 2>&1; then
+        echo "Base de données prête !"
+        exit 0
+    fi
+
+    echo "Tentative $i/$MAX_TRIES - Attente ..."
+    sleep $WAIT_SECONDS
 done
 
-echo "MySQL est prêt !"
-exec $cmd
+echo "Erreur : La base de données n'est pas disponible"
+exit 1
