@@ -19,7 +19,7 @@ def transform_players(df: pd.DataFrame) -> pd.DataFrame:
     df['username'] = df['username'].str.strip()
 
     # il reste des doublons dedans, on peut nettoyer ça sur le username étant donné qu'il n'est jamais vide
-    # et qu'il vient d'être nettoyé donc les doublons seront reconnus yesyes
+    # et qu'il vient d'être nettoyé donc les doublons seront reconnus
 
     df = df.drop_duplicates(subset=['username'])
 
