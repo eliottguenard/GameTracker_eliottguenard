@@ -15,12 +15,12 @@ def transform_players(df: pd.DataFrame) -> pd.DataFrame:
     # Supprimer les doublons sur player_id
     df = df.drop_duplicates(subset=['player_id'])
 
-    # il reste des doublons dedans, on peut nettoyer ça sur le username étant donné qu'il n'est jamais vide
-
-    
-
     # Nettoyer les espaces des username
     df['username'] = df['username'].str.strip()
+
+    # il reste des doublons dedans, on peut nettoyer ça sur le username étant donné qu'il n'est jamais vide
+
+    df = df.drop_duplicates(subset=['username'])
 
     # Convertir les dates
     df['registration_date'] = pd.to_datetime(df['registration_date'], errors='coerce')
