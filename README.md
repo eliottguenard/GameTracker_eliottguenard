@@ -15,15 +15,12 @@ git clone <url-du-depot>
 cd mini-projet-Eliott-Guénard
 
 # 2. Construire et démarrer les services
-docker-compose up -d --build
+docker-compose up --build
 
-# 3. Lancer le pipeline complet
-docker-compose run --rm app bash /app/scripts/run_pipeline.sh
-
-# 4. Consulter le rapport généré
+# 3. Consulter le rapport généré
 cat output/rapport.txt
 
-# 5. Arrêter les services
+# 4. Arrêter les services
 docker-compose down
 
 # Pour tout réinitialiser (supprimer la base de données)
