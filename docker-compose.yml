@@ -36,10 +36,7 @@ services:
       - ./src:/app/src
       - ./scripts:/app/scripts
       - ./output:/app/output
-    # lignes ici rajoutées pour garder le conteneur en vie pour que cela focntionne avec exec comme prévu dans le README
-    stdin_open: true
-    tty: true
-    command: tail -f /dev/null
+    command: bash /app/scripts/run_pipeline.sh
 
 volumes:
   db_data:
